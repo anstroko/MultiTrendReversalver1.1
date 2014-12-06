@@ -224,9 +224,9 @@ LabelInfo();
 if ((OrderType() == OP_BUY )&&(OrderMagicNumber() == Magic_Number )){ReCountBuy=ReCountBuy+1;}
 if ((OrderType() == OP_SELL)&&(OrderMagicNumber() == Magic_Number )){ReCountSell=ReCountSell+1;}
     }}}   
-if((ReCountBuy<CountBuy)&&(GoGoSell!=1)){SellSTOPDel();}   
+if((Lok<CountBuy)&&(ReCountBuy==0)){SellSTOPDel();}   
 
-if((ReCountSell<CountSell)&&(GoGoBuy!=1)){BuySTOPDel();}   
+if((Lok<CountSell)&&(ReCountSell==0)){BuySTOPDel();}   
   
   
   
@@ -918,7 +918,9 @@ if (OrderSelect(q1, SELECT_BY_POS, MODE_HISTORY)) {
   if ((OpenOrderSell==false)&&((((Close[1]-Open[1])>BodySize*k*Point)&&((High[1]-Low[1])>CandleSize*k*Point))||(CountBuy>Lok))&&(SellTrade==true))
     {    
    if(OpenOrderBuy==false){ GoGoSell=1;}
-if (TotalBLt!=0){GoGoSell=TotalBLt*Percent/100/lot1; if (GoGoSell<(AccountEquity()/MM)) {GoGoSell=AccountEquity()/MM;}                      }
+if (CountBuy>Lok){
+if (TotalBLt!=0){GoGoSell=TotalBLt*Percent/100/lot1; if (GoGoSell<(AccountEquity()/MM)) {GoGoSell=AccountEquity()/MM;}}
+                 }
 if (GoGoSell<1) {GoGoSell=1;} if (GoGoSell>CriticalCoef){GoGoSell=CriticalCoef;}
 if ((CountBuy==0)&&(CountSell==0)&&(DinamicLot==true)){Print("Рассчёт начального ордера");GoGoSell=AccountEquity()/MM;}
 Print ("Открытие 1-го ордера");
@@ -929,7 +931,9 @@ Alert("Ошибка открытия позиции № ", GetLastError());
 }}}
 if ((OpenOrderBuy==false)&&((((Open[1]-Close[1])>BodySize*k*Point)&&((High[1]-Low[1])>CandleSize*k*Point))||(CountSell>Lok))&&(BuyTrade==true)) {
 if(OpenOrderSell==false){ GoGoBuy=1;}
+if (CountSell>Lok){
 if (TotalSLt!=0){ GoGoBuy=TotalSLt*Percent/100/lot1; if (GoGoBuy<(AccountEquity()/MM)) {GoGoBuy=AccountEquity()/MM;} }
+                  }
 if (GoGoBuy<1) {GoGoBuy=1;}if (GoGoBuy>CriticalCoef){GoGoBuy=CriticalCoef;}
 if ((CountBuy==0)&&(CountSell==0)&&(DinamicLot==true)){Print("Рассчёт начального ордера");GoGoBuy=AccountEquity()/MM;}
 Sleep(2000);
