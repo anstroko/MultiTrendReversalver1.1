@@ -919,7 +919,7 @@ if (OrderSelect(q1, SELECT_BY_POS, MODE_HISTORY)) {
     {    
    if(OpenOrderBuy==false){ GoGoSell=1;}
 if (CountBuy>Lok){
-if (TotalBLt!=0){GoGoSell=TotalBLt*Percent/100/lot1; if (GoGoSell<(AccountEquity()/MM)) {GoGoSell=AccountEquity()/MM;}}
+if (TotalBLt!=0){GoGoSell=TotalBLt*Percent/100/lot1; if ((DinamicLot==true)&&(GoGoSell<(AccountEquity()/MM))) {GoGoSell=AccountEquity()/MM;}}
                  }
 if (GoGoSell<1) {GoGoSell=1;} if (GoGoSell>CriticalCoef){GoGoSell=CriticalCoef;}
 if ((CountBuy==0)&&(CountSell==0)&&(DinamicLot==true)){Print("Рассчёт начального ордера");GoGoSell=AccountEquity()/MM;}
@@ -932,7 +932,7 @@ Alert("Ошибка открытия позиции № ", GetLastError());
 if ((OpenOrderBuy==false)&&((((Open[1]-Close[1])>BodySize*k*Point)&&((High[1]-Low[1])>CandleSize*k*Point))||(CountSell>Lok))&&(BuyTrade==true)) {
 if(OpenOrderSell==false){ GoGoBuy=1;}
 if (CountSell>Lok){
-if (TotalSLt!=0){ GoGoBuy=TotalSLt*Percent/100/lot1; if (GoGoBuy<(AccountEquity()/MM)) {GoGoBuy=AccountEquity()/MM;} }
+if (TotalSLt!=0){ GoGoBuy=TotalSLt*Percent/100/lot1; if ((DinamicLot==true)&&(GoGoBuy<(AccountEquity()/MM))) {GoGoBuy=AccountEquity()/MM;} }
                   }
 if (GoGoBuy<1) {GoGoBuy=1;}if (GoGoBuy>CriticalCoef){GoGoBuy=CriticalCoef;}
 if ((CountBuy==0)&&(CountSell==0)&&(DinamicLot==true)){Print("Рассчёт начального ордера");GoGoBuy=AccountEquity()/MM;}
