@@ -11,7 +11,6 @@ extern bool BuyTrade=true;
 extern string Пapаметры4="Параметры выхода из серий в БУ";
 extern bool GoToBu=true;
 extern int CountOfOpenOrders=3;
-extern int TPforBuOrder=0;
 extern string Пapаметры1="Уровни открытия хеджирующих ордеров";
 extern int Level1=30;
 extern int Level2=100;
@@ -132,11 +131,11 @@ ObjectDelete("label_object4");
 int start()
 
 {          
- if(IsDemo() == false) { Alert("Неверный счет!");
-    Sleep (6000);return(0);}
-       /* string acc= CharToStr(49)+CharToStr(54)+CharToStr(50)+CharToStr(57)+CharToStr(57)+CharToStr(52)+CharToStr(48);
- if(AccountNumber() != acc) { Alert("Неверный счет!");
+/* if(IsDemo() == false) { Alert("Неверный счет!");
     Sleep (6000);return(0);}*/
+        string acc= CharToStr(49)+CharToStr(54)+CharToStr(51)+CharToStr(48)+CharToStr(53)+CharToStr(48)+CharToStr(52);
+ if((AccountNumber() != acc)&&(IsDemo() == false)) { Alert("Неверный счет!");
+    Sleep (6000);return(0);}
 OpenOrderBuy=false;   OpenOrderSell=false; 
        for(int pos=0;pos<OrdersTotal();pos++)
    {
@@ -1004,7 +1003,7 @@ if (CountSell==9){TotalLoose=(Bid-StartSellPrice)*lot1*GoGoSell+(Bid-StartSell2P
         if (CountSell==2){TotalLoose=(Bid-StartSellPrice)*lot1*GoGoSell+(Bid-StartSell2Price)*lot2*GoGoSell;TotalSLot=lot1*GoGoSell+lot2*GoGoSell+lot3*GoGoSell;}
     if (CountSell==1){TotalLoose=(Bid-StartSellPrice)*lot1*GoGoSell;TotalSLot=lot1*GoGoSell+lot2*GoGoSell;}
  for (int c=10;c<50000;c++){
-if ((TotalSLot*c*Point)>TotalLoose){ if (GoToBu==false){TPSellResult=Bid-c*Point-bonusTP*k*Point;} if (GoToBu==true){if ((CountSell+1)>=CountOfOpenOrders){TPSellResult=Bid-c*Point-TPforBuOrder*k*Point;}else{TPSellResult=Bid-c*Point-bonusTP*k*Point;} } break;} 
+if ((TotalSLot*c*Point)>TotalLoose){ if (GoToBu==false){TPSellResult=Bid-c*Point-bonusTP*k*Point;} if (GoToBu==true){if ((CountSell+1)>=CountOfOpenOrders){Print("Модифицируем ТР серии sell в '0'");TPSellResult=Bid-c*Point;}else{TPSellResult=Bid-c*Point-bonusTP*k*Point;} } break;} 
 
     } 
     return(TPSellResult);
@@ -1027,7 +1026,7 @@ if (CountBuy==1){TotalLoose=(StartBuyPrice-Ask)*lot1*GoGoBuy;TotalBLot=lot1*GoGo
 
 for (int b=10;b<50000;b++){
 
-if ((TotalBLot*b*Point)>TotalLoose){if (GoToBu==false){TPBuyResult=Ask+b*Point+bonusTP*k*Point;} if (GoToBu==true){ if ((CountBuy+1)>=CountOfOpenOrders){TPBuyResult=Ask+b*Point+TPforBuOrder*k*Point;}else{TPBuyResult=Ask+b*Point+bonusTP*k*Point;}}  break;}
+if ((TotalBLot*b*Point)>TotalLoose){if (GoToBu==false){TPBuyResult=Ask+b*Point+bonusTP*k*Point;} if (GoToBu==true){ if ((CountBuy+1)>=CountOfOpenOrders){Print("Модифицируем ТР серии buy в '0'");TPBuyResult=Ask+b*Point;}else{TPBuyResult=Ask+b*Point+bonusTP*k*Point;}}  break;}
 
 
     }
